@@ -9,21 +9,22 @@ import NotFoundPage from '../../pages/not-found-page';
 import PrivateRoute from '../private-route';
 import Layout from '../layout';
 import { getAuthorizationStatus } from '../../authorization-status';
-import { Offers } from '../../types/offer';
+import { City, Offers } from '../../types/offer';
 import { Reviews } from '../../types/review';
 
 type AppProps = {
+  cities: City[];
   offers: Offers;
   reviews: Reviews;
 };
 
-function App({ offers, reviews }: AppProps): JSX.Element {
+function App({ cities, offers, reviews }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route path={AppRoute.Root} element={<Layout />}>
-            <Route index element={<MainPage offers={offers} />} />
+            <Route index element={<MainPage cities={cities} offers={offers} />} />
             <Route
               path={AppRoute.Login}
               element={

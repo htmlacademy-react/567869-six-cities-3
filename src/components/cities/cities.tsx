@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { Offer, Offers } from '../../types/offer';
+import { City, Offer, Offers } from '../../types/offer';
 import PlaceCard from '../place-card';
-import { Nullable } from 'vitest';
+import Map from '../map';
 
 type CitiesProps = {
+  city: City;
   offers: Offers;
 };
 
-function Cities({ offers }: CitiesProps): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [activeOffer, setActiveOffer] = useState<Nullable<Offer>>(null);
+function Cities({ city, offers }: CitiesProps): JSX.Element {
+  const [activeOffer, setActiveOffer] = useState<Offer | null>(null);
 
   const handleHover = (offer?: Offer) => {
     setActiveOffer(offer || null);
@@ -20,9 +20,9 @@ function Cities({ offers }: CitiesProps): JSX.Element {
       <div className="cities__places-container container">
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
-          <b className="places__found">312 places to stay in Amsterdam</b>
+          <b className="places__found">{offers.length} places to stay in Amsterdam</b>
           <form className="places__sorting" action="#" method="get">
-            <span className="places__sorting-caption">Sort by</span>
+            <span className="places__sorting-caption">Sort by </span>
             <span className="places__sorting-type" tabIndex={0}>
               Popular
               <svg className="places__sorting-arrow" width="7" height="4">
@@ -58,7 +58,11 @@ function Cities({ offers }: CitiesProps): JSX.Element {
           </div>
         </section>
         <div className="cities__right-section">
-          <section className="cities__map map"></section>
+          <Map
+            city={city}
+            offers={offers}
+            selectedOffer={activeOffer}
+          />
         </div>
       </div>
     </div>
