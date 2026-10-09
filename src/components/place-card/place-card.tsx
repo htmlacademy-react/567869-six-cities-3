@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
+import clsx from 'clsx';
 import { Offer } from '../../types/offer';
 import { capitalize, ratingWidthStyle } from '../../utils/tools';
 import { AppRoute } from '../../const';
-import clsx from 'clsx';
+
 
 type PlaceCardProps = {
   offer: Offer;

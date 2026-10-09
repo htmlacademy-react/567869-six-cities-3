@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import Cities from '../../components/cities';
 import Tabs from '../../components/tabs';
 import { City } from '../../types/offer';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/use-redux';
 import { changeCity } from '../../store/action';
 
 

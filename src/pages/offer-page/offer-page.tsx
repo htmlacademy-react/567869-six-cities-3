@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import clsx from 'clsx';
 import { Offer } from '../../types/offer';
 import { useParams } from 'react-router-dom';
 import NotFoundPage from '../not-found-page';
@@ -10,8 +11,7 @@ import PlaceCard from '../../components/place-card';
 import { getAuthorizationStatus } from '../../authorization-status';
 import { AuthorizationStatus } from '../../const';
 import ReviewForm from '../../components/review-form';
-import clsx from 'clsx';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks/use-redux';
 
 type OfferPageProps = {
   reviews: Reviews;

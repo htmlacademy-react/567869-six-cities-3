@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import FavoritesList from '../../components/favorites-list';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks/use-redux';
 
 function FavoritesPage(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
