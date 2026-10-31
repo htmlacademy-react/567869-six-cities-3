@@ -28,6 +28,8 @@ function Layout() {
     try {
       await dispatch(logoutAction()).unwrap();
     } catch {
+      // eslint-disable-next-line no-console
+      console.error('Logout failed:', logoutError);
       setLogoutError('Logout error. Please try again.');
     } finally {
       setIsLoggingOut(false);
@@ -58,7 +60,7 @@ function Layout() {
                       {authorizationStatus === AuthorizationStatus.Auth ? (
                         <>
                           <span className="header__user-name user__name">
-                            {user?.email}
+                            {user?.email || 'no email'}
                           </span>
                           <span className="header__favorite-count">3</span>
                         </>

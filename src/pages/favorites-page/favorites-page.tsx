@@ -1,10 +1,17 @@
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import FavoritesList from '../../components/favorites-list';
-import { useAppSelector } from '../../hooks/use-redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/use-redux';
+import { fetchOffersAction } from '../../store/action';
 
 function FavoritesPage(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+  }, [dispatch]);
 
   return (
     <>

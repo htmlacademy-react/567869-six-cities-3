@@ -10,21 +10,18 @@ import NotFoundPage from '../../pages/not-found-page';
 import PrivateRoute from '../private-route';
 import Layout from '../layout';
 import { City } from '../../types/offer';
-import { Reviews } from '../../types/review';
 import { useAppDispatch } from '../../hooks/use-redux';
-import { checkAuthAction, fetchOffersAction } from '../../store/action';
+import { checkAuthAction } from '../../store/action';
 
 
 type AppProps = {
   cities: City[];
-  reviews: Reviews;
 };
 
-function App({ cities, reviews }: AppProps): JSX.Element {
+function App({ cities }: AppProps): JSX.Element {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(checkAuthAction());
-    dispatch(fetchOffersAction());
   }, [dispatch]);
 
   return (
@@ -51,7 +48,7 @@ function App({ cities, reviews }: AppProps): JSX.Element {
             />
             <Route
               path={`${AppRoute.Offer}/:id`}
-              element={<OfferPage reviews={reviews} />}
+              element={<OfferPage />}
             />
           </Route>
           <Route path="*" element={<NotFoundPage />} />

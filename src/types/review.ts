@@ -2,7 +2,6 @@ import { Host } from './offer';
 
 export type Review = {
   id: string;
-  offerId: string;
   date: string;
   user: Host;
   comment: string;
@@ -10,3 +9,10 @@ export type Review = {
 }
 
 export type Reviews = Review[];
+
+export type PostReviewData = {
+  offerId: string;
+  comment: string;
+  rating: number;
+};
+

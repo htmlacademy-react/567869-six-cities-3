@@ -18,3 +18,10 @@ export enum SortType {
   TopRatedFirst = 'Top rated first'
 }
 
+export enum APIRoute {
+  Offers = '/offers',
+  Comments = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+}
+

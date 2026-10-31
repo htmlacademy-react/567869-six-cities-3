@@ -1,9 +1,17 @@
-import { Fragment, ReactEventHandler, useState } from 'react';
+import { Fragment, useState } from 'react';
+import type { FormEvent } from 'react';
+import { useAppDispatch } from '../../hooks/use-redux';
+import { postReviewAction } from '../../store/action';
 
-type TChangeHandler = ReactEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+function ReviewForm({ offerId }: { offerId: string }): JSX.Element {
+  const dispatch = useAppDispatch();
+  const [selectedRating, setSelectedRating] = useState(0);
+  const [comment, setComment] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
-function ReviewForm(): JSX.Element {
-  const [review, setReview] = useState({ rating: 0, review: '' });
+  const text = comment.trim();
+  const canSubmit = selectedRating > 0 && text.length >= 50 && text.length <= 300;
 
   const rating = [
     { value: 5, label: 'perfect' },
@@ -13,12 +21,27 @@ function ReviewForm(): JSX.Element {
     { value: 1, label: 'terribly' },
   ];
 
-  const handleChange: TChangeHandler = (evt) => {
-    const { name, value } = evt.currentTarget;
-    setReview({ ...review, [name]: value });
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!canSubmit || isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError('');
+    try {
+      await dispatch(postReviewAction({ offerId, comment: text, rating: selectedRating })).unwrap();
+      setComment('');
+      setSelectedRating(0);
+    } catch (err) {
+      setError('Failed to submit review. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" onSubmit={(evt) => void handleSubmit(evt)}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
@@ -31,7 +54,9 @@ function ReviewForm(): JSX.Element {
               value={value}
               id={`${value}-stars`}
               type="radio"
-              onChange={handleChange}
+              onChange={() => setSelectedRating(value)}
+              checked={selectedRating === value}
+              disabled={isSubmitting}
             />
             <label
               htmlFor={`${value}-stars`}
@@ -50,9 +75,13 @@ function ReviewForm(): JSX.Element {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={handleChange}
-        // eslint-disable-next-line react/jsx-closing-tag-location
-      ></textarea>
+        value={comment}
+        maxLength={300}
+        disabled={isSubmitting}
+        onChange={(evt) => setComment(evt.target.value)}
+      >
+      </textarea>
+      {error && <p role="alert">{error}</p>}
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set{' '}
@@ -62,7 +91,7 @@ function ReviewForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={review.review.length < 50 || review.rating === 0}
+          disabled={!canSubmit || isSubmitting}
         >
           Submit
         </button>

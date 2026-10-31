@@ -21,7 +21,7 @@ function LoginPage(): JSX.Element {
     }
 
     const email = emailRef.current.value.trim();
-    const password = passwordRef.current.value;
+    const password = passwordRef.current.value.trim();
 
     setError(null);
     setIsSubmitting(true);
@@ -29,6 +29,8 @@ function LoginPage(): JSX.Element {
     try {
       await dispatch(loginAction({ email, password })).unwrap();
     } catch {
+      // eslint-disable-next-line no-console
+      console.error('Login failed:', error);
       setError('Authorization error. Please submit the form again.');
     } finally {
       setIsSubmitting(false);

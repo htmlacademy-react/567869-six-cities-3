@@ -1,9 +1,10 @@
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Cities from '../../components/cities';
 import Tabs from '../../components/tabs';
 import { City } from '../../types/offer';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-redux';
-import { changeCity } from '../../store/action';
+import { changeCity, fetchOffersAction } from '../../store/action';
 
 
 type MainPageProps = {
@@ -16,6 +17,10 @@ function MainPage({ cities }: MainPageProps): JSX.Element {
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+  }, [dispatch]);
 
   const activeCity = cities.find((city) => city.name === activeCityName) ?? cities[0];
 
