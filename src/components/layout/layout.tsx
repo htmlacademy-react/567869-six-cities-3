@@ -27,9 +27,9 @@ function Layout() {
 
     try {
       await dispatch(logoutAction()).unwrap();
-    } catch {
+    } catch (error) {
       // eslint-disable-next-line no-console
-      console.error('Logout failed:', logoutError);
+      console.error('Logout failed:', error);
       setLogoutError('Logout error. Please try again.');
     } finally {
       setIsLoggingOut(false);

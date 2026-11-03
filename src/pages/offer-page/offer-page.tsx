@@ -98,9 +98,8 @@ function OfferPage(): JSX.Element {
           {images.length > 0 ? (
             <div className="offer__gallery-container container">
               <div className="offer__gallery">
-                {images.map((src, index) => (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <div className="offer__image-wrapper" key={index}>
+                {images.map((src) => (
+                  <div className="offer__image-wrapper" key={src}>
                     <img
                       className="offer__image"
                       src={src}
@@ -114,11 +113,11 @@ function OfferPage(): JSX.Element {
 
           <div className="offer__container container">
             <div className="offer__wrapper">
-              {isPremium ? (
+              {isPremium && (
                 <div className="offer__mark">
                   <span>Premium</span>
                 </div>
-              ) : null}
+              )}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{title}</h1>
                 <button className={isFavoriteClassName} type="button">
@@ -155,9 +154,8 @@ function OfferPage(): JSX.Element {
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {goods.map((god, index) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <li className="offer__inside-item" key={index}>
+                  {goods.map((god) => (
+                    <li className="offer__inside-item" key={god}>
                       {god}
                     </li>
                   ))}
@@ -196,7 +194,7 @@ function OfferPage(): JSX.Element {
                   <span className="reviews__amount">{currentReviews.length}</span>
                 </h2>
                 <Review reviews={currentReviews} />
-                {isAuthorized && <ReviewForm key={currentOffer.id} offerId={currentOffer.id} />}
+                {isAuthorized && <ReviewForm offerId={currentOffer.id} />}
               </section>
             </div>
           </div>
