@@ -12,6 +12,7 @@ import {
   postReviewAction,
   fetchNearbyOffersAction,
   fetchFavoritesAction,
+  changeFavoriteStatusAction,
 } from './action';
 import type { Offer, FullOffer } from '../types/offer';
 import type { Reviews } from '../types/review';
@@ -60,6 +61,29 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchFavoritesAction.pending, (state) => {
       state.favoritesStatus = 'loading';
+    })
+    .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
+      const updatedOffer = action.payload;
+      const { id, isFavorite } = updatedOffer;
+
+      const catalogOffer = state.offers.find((offer) => offer.id === id);
+      if (catalogOffer) {
+        catalogOffer.isFavorite = isFavorite;
+      }
+
+      const nearbyOffer = state.nearbyOffers.find((offer) => offer.id === id);
+      if (nearbyOffer) {
+        nearbyOffer.isFavorite = isFavorite;
+      }
+
+      if (state.offer?.id === id) {
+        state.offer.isFavorite = isFavorite;
+      }
+
+      state.favorites = state.favorites.filter((offer) => offer.id !== id);
+      if (isFavorite) {
+        state.favorites.push(updatedOffer);
+      }
     })
     .addCase(fillOffer, (state, action) => {
       state.offer = action.payload;
