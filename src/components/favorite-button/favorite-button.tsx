@@ -7,18 +7,19 @@ import { changeFavoriteStatusAction } from '../../store/action';
 
 type FavoriteButtonProps = {
   offerId: string;
-  isFavorite: boolean;
   variant?: 'place-card' | 'offer';
 };
 
 function FavoriteButton({
   offerId,
-  isFavorite,
   variant = 'place-card',
 }: FavoriteButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isFavorite = useAppSelector((state) =>
+    state.favorites.some((favorite) => favorite.id === offerId)
+  );
   const [isUpdating, setIsUpdating] = useState(false);
 
   const handleClick = async () => {

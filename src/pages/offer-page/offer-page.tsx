@@ -67,7 +67,6 @@ function OfferPage(): JSX.Element {
     title,
     images,
     isPremium,
-    isFavorite,
     rating,
     type,
     maxAdults,
@@ -112,7 +111,7 @@ function OfferPage(): JSX.Element {
               )}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{title}</h1>
-                <FavoriteButton offerId={currentOffer.id} isFavorite={isFavorite} variant='offer' />
+                <FavoriteButton offerId={currentOffer.id} variant='offer' />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
