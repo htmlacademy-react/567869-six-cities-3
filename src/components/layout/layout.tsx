@@ -12,6 +12,7 @@ function Layout() {
     getLayoutState(pathname as AppRoute);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const user = useAppSelector((state) => state.user);
+  const favoritesCount = useAppSelector((state) => state.favorites.length);
   const dispatch = useAppDispatch();
 
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -62,7 +63,7 @@ function Layout() {
                           <span className="header__user-name user__name">
                             {user?.email || 'no email'}
                           </span>
-                          <span className="header__favorite-count">3</span>
+                          <span className="header__favorite-count">{favoritesCount}</span>
                         </>
                       ) : (
                         <span className="header__login">Sign In</span>

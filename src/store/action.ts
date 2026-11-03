@@ -72,6 +72,18 @@ export const fetchOfferAction = createAsyncThunk<
   }
 );
 
+export const fetchFavoritesAction = createAsyncThunk<
+  Offer[],
+  undefined,
+  { extra: AxiosInstance }
+>(
+  'favorites/fetchFavorites',
+  async (_arg, { extra: api, signal }) => {
+    const { data } = await api.get<Offer[]>(APIRoute.Favorite, { signal });
+    return data;
+  }
+);
+
 export const fetchReviewsAction = createAsyncThunk<
   Reviews,
   string,

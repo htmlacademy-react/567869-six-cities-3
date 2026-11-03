@@ -1,17 +1,20 @@
-import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import FavoritesList from '../../components/favorites-list';
-import { useAppDispatch, useAppSelector } from '../../hooks/use-redux';
-import { fetchOffersAction } from '../../store/action';
+import { useAppSelector } from '../../hooks/use-redux';
+import Spinner from '../../components/spinner';
+import FavoritesEmpty from '../../components/favorites-empty';
 
 function FavoritesPage(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
-  const dispatch = useAppDispatch();
+  const favoriteOffers = useAppSelector((state) => state.favorites);
+  const favoritesStatus = useAppSelector((state) => state.favoritesStatus);
 
-  useEffect(() => {
-    dispatch(fetchOffersAction());
-  }, [dispatch]);
+  if (favoritesStatus === 'loading') {
+    return <Spinner />;
+  }
+
+  if (favoritesStatus === 'success' && favoriteOffers.length === 0) {
+    return <FavoritesEmpty />;
+  }
 
   return (
     <>
