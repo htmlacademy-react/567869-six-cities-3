@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import clsx from 'clsx';
 import { fetchOfferAction, fetchReviewsAction, fetchNearbyOffersAction } from '../../store/action';
 import { Navigate, useParams } from 'react-router-dom';
 import Map from '../../components/map';
@@ -11,6 +10,7 @@ import { AuthorizationStatus } from '../../const';
 import ReviewForm from '../../components/review-form';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-redux';
 import Spinner from '../../components/spinner';
+import FavoriteButton from '../../components/favorite-button';
 
 function OfferPage(): JSX.Element {
 
@@ -80,14 +80,6 @@ function OfferPage(): JSX.Element {
 
   const mapOffers = [currentOffer, ...nearbyOffers];
 
-  const isFavoriteClassName = clsx(
-    'offer__bookmark-button',
-    'button',
-    {
-      'offer__bookmark-button--active': isFavorite,
-    }
-  );
-
   return (
     <>
       <Helmet>
@@ -120,12 +112,7 @@ function OfferPage(): JSX.Element {
               )}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{title}</h1>
-                <button className={isFavoriteClassName} type="button">
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <FavoriteButton offerId={currentOffer.id} isFavorite={isFavorite} variant='offer' />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
