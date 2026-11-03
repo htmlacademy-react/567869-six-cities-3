@@ -1,7 +1,7 @@
 import { HelmetProvider } from 'react-helmet-async';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { useEffect } from 'react';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import MainPage from '../../pages/main-page';
 import LoginPage from '../../pages/login-page';
 import FavoritesPage from '../../pages/favorites-page';
@@ -10,8 +10,8 @@ import NotFoundPage from '../../pages/not-found-page';
 import PrivateRoute from '../private-route';
 import Layout from '../layout';
 import { City } from '../../types/offer';
-import { useAppDispatch } from '../../hooks/use-redux';
-import { checkAuthAction } from '../../store/action';
+import { useAppDispatch, useAppSelector } from '../../hooks/use-redux';
+import { checkAuthAction, fetchFavoritesAction } from '../../store/action';
 
 
 type AppProps = {
@@ -23,6 +23,18 @@ function App({ cities }: AppProps): JSX.Element {
   useEffect(() => {
     dispatch(checkAuthAction());
   }, [dispatch]);
+
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      const request = dispatch(fetchFavoritesAction());
+
+      return () => {
+        request.abort();
+      };
+    }
+  }, [authorizationStatus, dispatch]);
 
   return (
     <HelmetProvider>

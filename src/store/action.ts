@@ -72,6 +72,35 @@ export const fetchOfferAction = createAsyncThunk<
   }
 );
 
+export const fetchFavoritesAction = createAsyncThunk<
+  Offer[],
+  undefined,
+  { extra: AxiosInstance }
+>(
+  'favorites/fetchFavorites',
+  async (_arg, { extra: api, signal }) => {
+    const { data } = await api.get<Offer[]>(APIRoute.Favorite, { signal });
+    return data;
+  }
+);
+
+export const changeFavoriteStatusAction = createAsyncThunk<
+  Offer,
+  { offerId: string; isFavorite: boolean },
+  { extra: AxiosInstance }
+>(
+  'favorites/changeStatus',
+  async ({ offerId, isFavorite }, { extra: api }) => {
+    const status = isFavorite ? 1 : 0;
+
+    const { data } = await api.post<Offer>(
+      `${APIRoute.Favorite}/${offerId}/${status}`
+    );
+
+    return data;
+  }
+);
+
 export const fetchReviewsAction = createAsyncThunk<
   Reviews,
   string,
@@ -110,7 +139,7 @@ export const postReviewAction = createAsyncThunk<
   { extra: AxiosInstance }
 >(
   'reviews/postReview',
-  async ({offerId, comment, rating}, { extra: api }) => {
+  async ({ offerId, comment, rating }, { extra: api }) => {
     const { data } = await api.post<Review>(
       `${APIRoute.Comments}/${offerId}`,
       { comment, rating }
