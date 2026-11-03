@@ -24,7 +24,6 @@ function PlaceCard({ offer, handleHover, className = 'cities' }: PlaceCardProps)
   const {
     id,
     isPremium,
-    isFavorite,
     previewImage,
     title,
     price,
@@ -79,7 +78,7 @@ function PlaceCard({ offer, handleHover, className = 'cities' }: PlaceCardProps)
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <FavoriteButton offerId={id} isFavorite={isFavorite} />
+          <FavoriteButton offerId={id} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
