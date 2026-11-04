@@ -6,6 +6,7 @@ import { SortType } from '../../const';
 import Sorting from '../sorting';
 import { getSortedOffers } from '../../utils/sort-offers';
 import Spinner from '../spinner';
+import CitiesEmpty from '../cities-empty';
 
 type CitiesProps = {
   city: City;
@@ -40,6 +41,12 @@ function Cities({ city, offers, isOffersDataLoading, offersError }: CitiesProps)
           </p>
         </div>
       </div>
+    );
+  }
+
+  if (offers.length === 0) {
+    return (
+      <CitiesEmpty cityName={city.name}/>
     );
   }
 

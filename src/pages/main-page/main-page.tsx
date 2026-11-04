@@ -5,6 +5,7 @@ import Tabs from '../../components/tabs';
 import { City } from '../../types/offer';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-redux';
 import { changeCity, fetchOffersAction } from '../../store/action';
+import clsx from 'clsx';
 
 
 type MainPageProps = {
@@ -29,6 +30,15 @@ function MainPage({ cities }: MainPageProps): JSX.Element {
     (offer) => offer.city.name === activeCity.name
   );
 
+  const isEmpty = !isOffersDataLoading && !offersError && filteredOffers.length === 0;
+  const mainClassName = clsx(
+    'page__main',
+    'page__main--index',
+    {
+      'page__main--index-empty': isEmpty,
+    }
+  );
+
   const handleCityChange = (city: City) => {
     dispatch(changeCity(city.name));
   };
@@ -38,7 +48,7 @@ function MainPage({ cities }: MainPageProps): JSX.Element {
       <Helmet>
         <title>6 cities</title>
       </Helmet>
-      <main className="page__main page__main--index">
+      <main className={mainClassName}>
         <h1 className="visually-hidden">Cities</h1>
         <Tabs cities={cities} activeCity={activeCity} onCityChange={handleCityChange} />
         <Cities city={activeCity} offers={filteredOffers} isOffersDataLoading={isOffersDataLoading} offersError={offersError} />
