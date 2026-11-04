@@ -15,6 +15,7 @@ function MainPage({ cities }: MainPageProps): JSX.Element {
   const activeCityName = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const offersError = useAppSelector((state) => state.offersError);
 
   const dispatch = useAppDispatch();
 
@@ -40,7 +41,7 @@ function MainPage({ cities }: MainPageProps): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <Tabs cities={cities} activeCity={activeCity} onCityChange={handleCityChange} />
-        <Cities city={activeCity} offers={filteredOffers} isOffersDataLoading={isOffersDataLoading} />
+        <Cities city={activeCity} offers={filteredOffers} isOffersDataLoading={isOffersDataLoading} offersError={offersError} />
       </main>
     </>
   );

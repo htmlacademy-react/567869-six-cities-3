@@ -3,6 +3,7 @@ import {
   changeCity,
   fillOffer,
   fillOffers,
+  fetchOffersAction,
   fetchReviewsAction,
   setOfferError,
   setOfferDataLoadingStatus,
@@ -28,6 +29,7 @@ const initialState: {
   favoritesStatus: 'loading' | 'success';
   offer: FullOffer | null;
   isOffersDataLoading: boolean;
+  offersError: boolean;
   isOfferDataLoading: boolean;
   offerError: 'not-found' | 'network' | null;
   reviews: Reviews;
@@ -41,6 +43,7 @@ const initialState: {
   favoritesStatus: 'loading',
   offer: null,
   isOffersDataLoading: true,
+  offersError: false,
   isOfferDataLoading: false,
   offerError: null,
   reviews: [],
@@ -54,6 +57,14 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fillOffers, (state, action) => {
       state.offers = action.payload;
+    })
+    .addCase(fetchOffersAction.pending, (state) => {
+      state.isOffersDataLoading = true;
+      state.offersError = false;
+    })
+    .addCase(fetchOffersAction.rejected, (state) => {
+      state.isOffersDataLoading = false;
+      state.offersError = true;
     })
     .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
       state.favorites = action.payload;
