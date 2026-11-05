@@ -6,14 +6,16 @@ import { SortType } from '../../const';
 import Sorting from '../sorting';
 import { getSortedOffers } from '../../utils/sort-offers';
 import Spinner from '../spinner';
+import CitiesEmpty from '../cities-empty';
 
 type CitiesProps = {
   city: City;
   offers: Offer[];
   isOffersDataLoading: boolean;
+  offersError: boolean;
 };
 
-function Cities({ city, offers, isOffersDataLoading }: CitiesProps): JSX.Element {
+function Cities({ city, offers, isOffersDataLoading, offersError }: CitiesProps): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<Offer>();
   const [activeSort, setActiveSort] = useState<SortType>(SortType.Popular);
   const sortedOffers = getSortedOffers(offers, activeSort);
@@ -28,6 +30,24 @@ function Cities({ city, offers, isOffersDataLoading }: CitiesProps): JSX.Element
 
   if (isOffersDataLoading) {
     return <Spinner />;
+  }
+
+  if (offersError) {
+    return (
+      <div className="cities">
+        <div className="cities__places-container container">
+          <p role="alert">
+            Failed to load offers. Please try again later.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (offers.length === 0) {
+    return (
+      <CitiesEmpty cityName={city.name}/>
+    );
   }
 
   return (
