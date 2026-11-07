@@ -67,6 +67,7 @@ function OfferPage(): JSX.Element {
     title,
     images,
     isPremium,
+    isFavorite,
     rating,
     type,
     maxAdults,
@@ -79,6 +80,9 @@ function OfferPage(): JSX.Element {
 
   const mapOffers = [currentOffer, ...nearbyOffers];
 
+  const bedroomWord = bedrooms === 1 ? 'Bedroom' : 'Bedrooms';
+  const adultWord = maxAdults === 1 ? 'adult' : 'adults';
+
   return (
     <>
       <Helmet>
@@ -89,7 +93,7 @@ function OfferPage(): JSX.Element {
           {images.length > 0 ? (
             <div className="offer__gallery-container container">
               <div className="offer__gallery">
-                {images.map((src) => (
+                {images.slice(0, 6).map((src) => (
                   <div className="offer__image-wrapper" key={src}>
                     <img
                       className="offer__image"
@@ -111,7 +115,7 @@ function OfferPage(): JSX.Element {
               )}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{title}</h1>
-                <FavoriteButton offerId={currentOffer.id} variant='offer' />
+                <FavoriteButton offerId={currentOffer.id} isFavorite={isFavorite} variant='offer' />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
@@ -127,10 +131,10 @@ function OfferPage(): JSX.Element {
                   {capitalize(type)}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {bedrooms} Bedrooms
+                  {bedrooms} {bedroomWord}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {maxAdults} adults
+                  Max {maxAdults} {adultWord}
                 </li>
               </ul>
               <div className="offer__price">

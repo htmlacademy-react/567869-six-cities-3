@@ -76,7 +76,6 @@ function ReviewForm({ offerId }: { offerId: string }): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={comment}
-        maxLength={300}
         disabled={isSubmitting}
         onChange={(evt) => setComment(evt.target.value)}
       >

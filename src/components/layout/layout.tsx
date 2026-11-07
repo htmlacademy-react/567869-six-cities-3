@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
+import clsx from 'clsx';
 import Logo from '../logo';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { getLayoutState } from './utils';
@@ -13,10 +14,21 @@ function Layout() {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const user = useAppSelector((state) => state.user);
   const favoritesCount = useAppSelector((state) => state.favorites.length);
+  const isFavoritesEmpty = useAppSelector(
+    (state) => state.favoritesStatus === 'success' && state.favorites.length === 0
+  );
   const dispatch = useAppDispatch();
 
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [logoutError, setLogoutError] = useState<string | null>(null);
+
+  const pageClassName = clsx(
+    'page',
+    rootClassName,
+    {
+      'page--favorites-empty': pathname === String(AppRoute.Favorites) && isFavoritesEmpty,
+    }
+  );
 
   const handleLogout = async () => {
     if (isLoggingOut) {
@@ -38,7 +50,7 @@ function Layout() {
   };
 
   return (
-    <div className={`page${rootClassName}`}>
+    <div className={pageClassName}>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
