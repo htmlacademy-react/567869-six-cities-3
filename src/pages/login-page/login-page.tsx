@@ -1,8 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 import { useRef, useState } from 'react';
 import type { FormEvent } from 'react';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { cities } from '../../mocks/cities';
 import { useAppDispatch } from '../../hooks/use-redux';
-import { loginAction } from '../../store/action';
+import { changeCity, loginAction } from '../../store/action';
 
 function LoginPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -12,6 +15,9 @@ function LoginPage(): JSX.Element {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [randomCity] = useState(
+    () => cities[Math.floor(Math.random() * cities.length)]
+  );
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,6 +47,11 @@ function LoginPage(): JSX.Element {
       setIsSubmitting(false);
     }
   };
+
+  const handleCityClick = () => {
+    dispatch(changeCity(randomCity.name));
+  };
+
   return (
     <>
       <Helmet>
@@ -90,9 +101,13 @@ function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                className="locations__item-link"
+                to={AppRoute.Root}
+                onClick={handleCityClick}
+              >
+                <span>{randomCity.name}</span>
+              </Link>
             </div>
           </section>
         </div>
