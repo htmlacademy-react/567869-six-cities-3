@@ -23,6 +23,11 @@ function LoginPage(): JSX.Element {
     const email = emailRef.current.value.trim();
     const password = passwordRef.current.value.trim();
 
+    const isPasswordValid = /\d/.test(password);
+    if (!isPasswordValid) {
+      return;
+    }
+
     setError(null);
     setIsSubmitting(true);
 
