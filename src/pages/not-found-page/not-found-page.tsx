@@ -14,7 +14,7 @@ function NotFoundPage() {
           <div className="cities__places-container cities__places-container--empty container">
             <section className="cities__no-places">
               <div className="cities__status-wrapper tabs__content">
-                <b className="cities__status">Page is not found</b>
+                <b className="cities__status">404 Not Found</b>
                 <Link className="button form__submit" to={AppRoute.Root}>
                   Do you want to go back?{' '}
                 </Link>
