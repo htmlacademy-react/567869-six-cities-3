@@ -1,24 +1,24 @@
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { Offer } from '../../types/offer';
-import { capitalize, ratingWidthStyle } from '../../utils/tools';
+import { capitalize, getRatingWidthStyle } from '../../utils/tools';
 import { AppRoute } from '../../const';
 import FavoriteButton from '../favorite-button';
 
 
 type PlaceCardProps = {
   offer: Offer;
-  handleHover?: (offer?: Offer) => void;
+  onHover?: (offer?: Offer) => void;
   className?: 'cities' | 'near-places';
 };
 
-function PlaceCard({ offer, handleHover, className = 'cities' }: PlaceCardProps): JSX.Element {
+function PlaceCard({ offer, onHover, className = 'cities' }: PlaceCardProps): JSX.Element {
   const handleMouseOn = () => {
-    handleHover?.(offer);
+    onHover?.(offer);
   };
 
   const handleMouseOff = () => {
-    handleHover?.();
+    onHover?.();
   };
 
   const {
@@ -83,7 +83,7 @@ function PlaceCard({ offer, handleHover, className = 'cities' }: PlaceCardProps)
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: ratingWidthStyle(rating) }}></span>
+            <span style={{ width: getRatingWidthStyle(rating) }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

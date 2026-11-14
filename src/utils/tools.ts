@@ -1,5 +1,7 @@
-export function ratingWidthStyle(rating: number): string {
-  return `${Math.round(rating) * (100 / 5)}%`;
+import { MAX_RATING } from '../const';
+
+export function getRatingWidthStyle(rating: number): string {
+  return `${Math.round(rating) * (100 / MAX_RATING)}%`;
 }
 export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();

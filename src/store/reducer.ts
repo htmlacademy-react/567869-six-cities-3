@@ -17,7 +17,7 @@ import {
 } from './action';
 import type { Offer, FullOffer } from '../types/offer';
 import type { Reviews } from '../types/review';
-import { AuthorizationStatus } from '../const';
+import { AuthorizationStatus, MAX_NEARBY_OFFERS_COUNT } from '../const';
 import type { UserData } from '../types/user-data';
 
 const initialState: {
@@ -109,7 +109,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.nearbyOffers = [];
     })
     .addCase(fetchNearbyOffersAction.fulfilled, (state, action) => {
-      state.nearbyOffers = action.payload.slice(0, 3);
+      state.nearbyOffers = action.payload.slice(0, MAX_NEARBY_OFFERS_COUNT);
     })
     .addCase(postReviewAction.fulfilled, (state, action) => {
       if (state.offer?.id === action.meta.arg.offerId) {

@@ -2,6 +2,15 @@ import { Fragment, useState } from 'react';
 import type { FormEvent } from 'react';
 import { useAppDispatch } from '../../hooks/use-redux';
 import { postReviewAction } from '../../store/action';
+import { MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH } from '../../const';
+
+const RATINGS = [
+  { value: 5, label: 'perfect' },
+  { value: 4, label: 'good' },
+  { value: 3, label: 'not bad' },
+  { value: 2, label: 'badly' },
+  { value: 1, label: 'terribly' },
+];
 
 function ReviewForm({ offerId }: { offerId: string }): JSX.Element {
   const dispatch = useAppDispatch();
@@ -11,15 +20,10 @@ function ReviewForm({ offerId }: { offerId: string }): JSX.Element {
   const [error, setError] = useState('');
 
   const text = comment.trim();
-  const canSubmit = selectedRating > 0 && text.length >= 50 && text.length <= 300;
-
-  const rating = [
-    { value: 5, label: 'perfect' },
-    { value: 4, label: 'good' },
-    { value: 3, label: 'not bad' },
-    { value: 2, label: 'badly' },
-    { value: 1, label: 'terribly' },
-  ];
+  const canSubmit =
+    selectedRating > 0 &&
+    text.length >= MIN_COMMENT_LENGTH &&
+    text.length <= MAX_COMMENT_LENGTH;
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -46,7 +50,7 @@ function ReviewForm({ offerId }: { offerId: string }): JSX.Element {
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        {rating.map(({ value, label }) => (
+        {RATINGS.map(({ value, label }) => (
           <Fragment key={value}>
             <input
               className="form__rating-input visually-hidden"
@@ -85,7 +89,7 @@ function ReviewForm({ offerId }: { offerId: string }): JSX.Element {
         <p className="reviews__help">
           To submit review please make sure to set{' '}
           <span className="reviews__star">rating</span> and describe your stay
-          with at least <b className="reviews__text-amount">50 characters</b>.
+          with at least <b className="reviews__text-amount">{MIN_COMMENT_LENGTH} characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"
