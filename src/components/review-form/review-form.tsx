@@ -3,6 +3,14 @@ import type { FormEvent } from 'react';
 import { useAppDispatch } from '../../hooks/use-redux';
 import { postReviewAction } from '../../store/action';
 
+const RATINGS = [
+  { value: 5, label: 'perfect' },
+  { value: 4, label: 'good' },
+  { value: 3, label: 'not bad' },
+  { value: 2, label: 'badly' },
+  { value: 1, label: 'terribly' },
+];
+
 function ReviewForm({ offerId }: { offerId: string }): JSX.Element {
   const dispatch = useAppDispatch();
   const [selectedRating, setSelectedRating] = useState(0);
@@ -12,14 +20,6 @@ function ReviewForm({ offerId }: { offerId: string }): JSX.Element {
 
   const text = comment.trim();
   const canSubmit = selectedRating > 0 && text.length >= 50 && text.length <= 300;
-
-  const rating = [
-    { value: 5, label: 'perfect' },
-    { value: 4, label: 'good' },
-    { value: 3, label: 'not bad' },
-    { value: 2, label: 'badly' },
-    { value: 1, label: 'terribly' },
-  ];
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -46,7 +46,7 @@ function ReviewForm({ offerId }: { offerId: string }): JSX.Element {
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        {rating.map(({ value, label }) => (
+        {RATINGS.map(({ value, label }) => (
           <Fragment key={value}>
             <input
               className="form__rating-input visually-hidden"

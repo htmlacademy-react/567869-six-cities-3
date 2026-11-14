@@ -1,4 +1,4 @@
-export function ratingWidthStyle(rating: number): string {
+export function getRatingWidthStyle(rating: number): string {
   return `${Math.round(rating) * (100 / 5)}%`;
 }
 export function capitalize(str: string): string {

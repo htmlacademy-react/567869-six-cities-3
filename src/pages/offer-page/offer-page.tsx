@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { fetchOfferAction, fetchReviewsAction, fetchNearbyOffersAction } from '../../store/action';
 import { Navigate, useParams } from 'react-router-dom';
 import Map from '../../components/map';
-import { capitalize, ratingWidthStyle } from '../../utils/tools';
+import { capitalize, getRatingWidthStyle } from '../../utils/tools';
 import Review from '../../components/review';
 import PlaceCard from '../../components/place-card';
 import { AuthorizationStatus } from '../../const';
@@ -119,7 +119,7 @@ function OfferPage(): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: ratingWidthStyle(rating) }}></span>
+                  <span style={{ width: getRatingWidthStyle(rating) }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">
