@@ -64,7 +64,7 @@ function Cities({ city, offers, isOffersDataLoading, offersError }: CitiesProps)
               <PlaceCard
                 key={offer.id}
                 offer={offer}
-                handleHover={handleHover}
+                onHover={handleHover}
               />
             ))}
           </div>

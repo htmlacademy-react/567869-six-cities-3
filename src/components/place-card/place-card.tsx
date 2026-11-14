@@ -8,17 +8,17 @@ import FavoriteButton from '../favorite-button';
 
 type PlaceCardProps = {
   offer: Offer;
-  handleHover?: (offer?: Offer) => void;
+  onHover?: (offer?: Offer) => void;
   className?: 'cities' | 'near-places';
 };
 
-function PlaceCard({ offer, handleHover, className = 'cities' }: PlaceCardProps): JSX.Element {
+function PlaceCard({ offer, onHover, className = 'cities' }: PlaceCardProps): JSX.Element {
   const handleMouseOn = () => {
-    handleHover?.(offer);
+    onHover?.(offer);
   };
 
   const handleMouseOff = () => {
-    handleHover?.();
+    onHover?.();
   };
 
   const {
